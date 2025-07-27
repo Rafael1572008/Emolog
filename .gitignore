@@ -30,4 +30,8 @@ build/
 !**/src/test/**/build/
 
 ### VS Code ###
-.vscode/database.sqlite
+.vscode/
+
+## SQLite
+java/database.sqlite
+database.sqlite
