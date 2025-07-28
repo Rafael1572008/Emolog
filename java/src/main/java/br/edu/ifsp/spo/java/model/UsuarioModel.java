@@ -3,7 +3,7 @@ package br.edu.ifsp.spo.java.model;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "tb_cadastro_user")
+@Table(name = "tb_usuarios")
 public class UsuarioModel {
 
     @Id
