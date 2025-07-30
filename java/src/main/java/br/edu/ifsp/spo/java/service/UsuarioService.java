@@ -11,10 +11,12 @@ import java.util.Optional;
 public class UsuarioService {
     private UsuarioRepository usuarioRepository;
 
+
     // Construtor
     public UsuarioService(UsuarioRepository usuarioRepository) {
         this.usuarioRepository = usuarioRepository;
     }
+
 
     // Listar todos os usuarios
     public List<UsuarioModel> getAll() { return usuarioRepository.findAll(); }

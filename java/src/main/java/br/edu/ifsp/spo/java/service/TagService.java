@@ -12,6 +12,7 @@ public class TagService {
 
     private TagRepository tagRepository;
 
+    /// Contrutor
     public TagService(TagRepository tagRepository) {
         this.tagRepository = tagRepository;
     }
