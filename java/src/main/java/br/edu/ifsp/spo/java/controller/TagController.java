@@ -34,9 +34,9 @@ public class TagController {
 
     // Obter tag por Id
     @GetMapping("/{id}")
-    public ResponseEntity<TagModel> getById(@PathVariable Long id) {
-        Optional<TagModel> tagOpt = tagService.findById(id);
-        return tagOpt
+    public ResponseEntity<TagModel> getById(@PathVariable Long id) { /// PathVariable pega o id pela URL
+        Optional<TagModel> tagOptional = tagService.findById(id);
+        return tagOptional
                 .map(ResponseEntity::ok)  // 200 OK + tag
                 .orElse(ResponseEntity.notFound().build()); // 404 se não encontrar
     }

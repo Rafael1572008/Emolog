@@ -1,6 +1,9 @@
 package br.edu.ifsp.spo.java.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+
+import java.util.Set;
 
 @Entity
 @Table(name = "tb_usuarios")
@@ -9,6 +12,10 @@ public class UsuarioModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @JsonIgnore  /// Evitar o 'loop infinito de serialização Json'
+    @OneToMany(mappedBy = "usuario")
+    private Set<HumorModel> registrosHumor;
 
     private String nome;
     private String email;
@@ -30,6 +37,14 @@ public class UsuarioModel {
 
     public void setId(long id) {
         this.id = id;
+    }
+
+    public Set<HumorModel> getRegistrosHumor(){
+        return registrosHumor;
+    }
+
+    public void setRegistrosHumor(Set<HumorModel> registrosHumor) {
+        this.registrosHumor = registrosHumor;
     }
 
     public String getNome() {
