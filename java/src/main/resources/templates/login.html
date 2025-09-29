@@ -1,27 +1,45 @@
-<!doctype html>
-<html lang="en">
+<!DOCTYPE html>
+<html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta content="width=device-width, initial-scale=1" name="viewport">
-    <title>Login</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Emologgers</title>
+  <link rel="stylesheet" href="style.css">
 </head>
+<script src="script.js"></script>
 <body>
-<div class="login-container">
-    <h1>Login</h1>
-    <form action="/login" method="post">
-        <label for="username">Usuário</label>
-        <input id="username" placeholder="Digite seu usuário" type="text"/>
+  <div class="container">
+    <div class="login-box">
+      <h2>Faça seu Login</h2>
+      <form action="LoginServlet" method="post">
+        <div class="input-box">
+          <input type="email" name="email" placeholder="Email" required>
+        </div>
+        <div class="input-box">
+          <input type="password" name="senha" placeholder="Senha" required>
+        </div>
+        <button type="submit" class="btn">Entrar</button>
+      </form>
 
-        <label for="password">Senha</label>
-        <input id="password" placeholder="Digite sua senha"/>
+      <p class="or">ou continuar com:</p>
+     <div class="social-login">
+  <a href="https://accounts.google.com/o/oauth2/auth?
+     client_id=SEU_CLIENT_ID
+     &redirect_uri=http://localhost:8080/LoginGoogleCallback
+     &response_type=code
+     &scope=email profile"
+     class="google">Google</a>
 
-        <button type="submit">Entrar</button>
-    </form>
-
-    <div>
-        <p><a href="#">Esqueceu a senha?</a></p>
-        <p><a href="/cadastro">Cadastrar-se</a></p>
-    </div>
+  <a href="https://www.facebook.com/v15.0/dialog/oauth?
+     client_id=SEU_CLIENT_ID
+     &redirect_uri=http://localhost:8080/LoginFacebookCallback
+     &response_type=code
+     &scope=email"
+     class="facebook">Facebook</a>
 </div>
+
+      <p class="cadastro">Ainda não possui uma conta? <a href="cadastro.html">Cadastre-se agora!</a></p>
+    </div>
+  </div>
 </body>
 </html>

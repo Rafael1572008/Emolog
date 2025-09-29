@@ -33,5 +33,5 @@ build/
 .vscode/
 
 ## SQLite
-java/database.sqlite
-database.sqlite
+### java/database.sqlite
+### database.sqlite
