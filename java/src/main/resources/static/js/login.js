@@ -1,39 +1,54 @@
-const form = document.querySelector('form');
+document.addEventListener('DOMContentLoaded', () => {
+    const form = document.getElementById('loginForm');
 
-form.addEventListener('submit', (e) => {
-  e.preventDefault(); 
+    form.addEventListener('submit', async (e) => {
+        e.preventDefault();
 
-  const email = form.email.value.trim();
-  const senha = form.senha.value.trim();
+        const email = e.target.email.value.trim();
+        const senha = e.target.senha.value.trim();
 
-  if (!validateEmail(email)) {
-    alert('Por favor, insira um email válido');
-    return;
-  }
 
-  if (senha.length < 6) {
-    alert('A senha precisa ter pelo menos 6 caracteres');
-    return;
-  }
+        try {
+            const response = await fetch('/usuario/login', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ email, senha }),
+            });
 
-  form.submit();
-});
+            if (response.ok) {
+                alert('Login realizado com sucesso!');
+                window.location.href = '/home';
+            } else if (response.status === 401) {
+                alert('Credenciais inválidas!');
+            } else {
+                alert('Erro ao tentar logar. Tente novamente!');
+            }
+        } catch (error) {
+            console.error('Erro no login:', error);
+            alert('Falha de conexão com o servidor.');
+        }
+    });
 
-function validateEmail(email) {
-  const re = /\S+@\S+\.\S+/;
-  return re.test(email);
-}
+    // Função para validar email
+    function validateEmail(email) {
+        const re = /\S+@\S+\.\S+/;
+        return re.test(email);
+    }
 
-const googleBtn = document.querySelector('.google');
-const facebookBtn = document.querySelector('.facebook');
+    // Social login
+    const googleBtn = document.querySelector('.google');
+    const facebookBtn = document.querySelector('.facebook');
 
-[googleBtn, facebookBtn].forEach(btn => {
-  btn.addEventListener('click', (e) => {
-    e.preventDefault();
-    window.open(
-      btn.href,
-      '_blank',
-      'width=500,height=600,top=100,left=100'
-    );
-  });
+    [googleBtn, facebookBtn].forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            e.preventDefault();
+            window.open(
+                btn.getAttribute('href'),
+                '_blank',
+                'width=500,height=600,top=100,left=100'
+            );
+        });
+    });
 });
