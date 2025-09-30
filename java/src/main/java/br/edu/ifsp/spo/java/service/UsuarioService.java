@@ -29,4 +29,9 @@ public class UsuarioService {
 
     // Procurar por Id (Me obrigou a botar Optional, JPA)
     public Optional<UsuarioModel> findById(Long id){ return usuarioRepository.findById(id); }
+
+    // Prucurar user pela senha e email
+    public Optional<UsuarioModel> findByEmail(String email){
+        return usuarioRepository.findByEmail(email);
+    }
 }
