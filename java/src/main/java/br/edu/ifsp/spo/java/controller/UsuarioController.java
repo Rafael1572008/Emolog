@@ -14,7 +14,7 @@ public class UsuarioController {
 
     private final UsuarioService usuarioService;
 
-    // Contrutor
+    // Construtor
     public UsuarioController(UsuarioService usuarioService) {
         this.usuarioService = usuarioService;
     }

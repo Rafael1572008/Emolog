@@ -35,7 +35,7 @@ public class HumorModel {
     )
     private Set<TagModel> tags;
 
-    /// Contrutores
+    /// Construtores
 
     public HumorModel(){}
 
@@ -47,7 +47,7 @@ public class HumorModel {
         this.usuario = usuario;
     }
 
-    /// Getter é Setters
+    /// Getter e Setters
     public LocalDateTime getDataHora() {
         return dataHora;
     }
