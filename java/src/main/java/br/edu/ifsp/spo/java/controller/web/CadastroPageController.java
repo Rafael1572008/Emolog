@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 public class CadastroPageController {
 
     @GetMapping("/cadastro")
-    public String showCadastroPage() {
-        return "cadastro"; // Retorna o arquivo cadastro.html em src/main/resources/templates/
+    public String cadastroPage() {
+        return "cadastro";
     }
 }

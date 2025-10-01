@@ -19,7 +19,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             if (response.ok) {
                 alert('Login realizado com sucesso!');
-                window.location.href = '/home';
+                window.location.href = '/';
             } else if (response.status === 401) {
                 alert('Credenciais inválidas!');
             } else {

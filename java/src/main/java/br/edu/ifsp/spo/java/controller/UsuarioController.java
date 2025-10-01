@@ -5,6 +5,7 @@ import br.edu.ifsp.spo.java.model.UsuarioModel;
 import br.edu.ifsp.spo.java.service.UsuarioService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import jakarta.servlet.http.HttpSession;
 
 import java.util.List;
 import java.util.Optional;
@@ -46,15 +47,23 @@ public class UsuarioController {
 
     // Buscar por email e senha
     @PostMapping("/login")
-    public ResponseEntity<UsuarioModel> getbyEmailandSenha(@RequestBody LoginResponseDTO loginResponse){
+    public ResponseEntity<UsuarioModel> getbyEmailandSenha(@RequestBody LoginResponseDTO loginResponse, HttpSession session){
         Optional<UsuarioModel> usuarioOpt = usuarioService.findByEmail(loginResponse.getEmail());
 
         if (usuarioOpt.isPresent() && usuarioOpt.get().getSenhaHash().equals(loginResponse.getSenha())) {
+            session.setAttribute("usuario", usuarioOpt.get().getNome());
             return ResponseEntity.ok(usuarioOpt.get()); // 200 OK
         }
 
         return ResponseEntity.status(401).build(); // 401 Unauthorized
     }
 
-
+    @GetMapping("/logout")
+    public ResponseEntity<Void> logout(HttpSession session) {
+        session.invalidate();
+        return ResponseEntity
+                .status(302)
+                .header("Location", "/login")
+                .build();
+    }
 }
