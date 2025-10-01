@@ -1,5 +1,6 @@
 package br.edu.ifsp.spo.java.controller.web;
 
+import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 
@@ -7,7 +8,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 public class CadastroPageController {
 
     @GetMapping("/cadastro")
-    public String showCadastroPage() {
-        return "cadastro"; // Retorna o arquivo cadastro.html em src/main/resources/templates/
+    public String cadastroPage(HttpSession session) {
+        if (session.getAttribute("usuario") != null) {
+            return "redirect:/";
+        }
+        return "cadastro";
     }
 }
