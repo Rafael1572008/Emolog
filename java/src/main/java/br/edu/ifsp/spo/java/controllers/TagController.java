@@ -1,4 +1,4 @@
-package br.edu.ifsp.spo.java.controller;
+package br.edu.ifsp.spo.java.controllers;
 
 import br.edu.ifsp.spo.java.model.TagModel;
 import br.edu.ifsp.spo.java.service.TagService;

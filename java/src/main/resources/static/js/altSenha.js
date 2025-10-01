@@ -1,11 +1,10 @@
 document.getElementById('changePasswordForm').addEventListener('submit', async (e) => {
     e.preventDefault();
 
-    const senhaAtual = document.getElementById('current-password').value
-    const novaSenha = document.getElementById('new-password').value
-    const confirmarNovaSenha = document.getElementById('new-password-confirmation').value
+    const senhaNova = document.getElementById('new-password').value
+    const confirmarSenhaNova = document.getElementById('new-password-confirmation').value
 
-    if (novaSenha !== confirmarNovaSenha) {
+    if (senhaNova !== confirmarSenhaNova) {
         alert('As senhas não coincidem!');
         return;
     }
@@ -15,13 +14,13 @@ document.getElementById('changePasswordForm').addEventListener('submit', async (
         headers: {
             'Content-Type': 'application/json',
         },
-        body: JSON.stringify({novaSenha}),
+        body: JSON.stringify({ senhaNova }),
     });
 
     if (response.ok) {
-        alert('Senha alterada com sucesso!');
-        window.location.href = '/'; // Redireciona para a página de login
-    } else {
-        alert('Erro ao alterar a senha. Tente novamente!');
-    }
+            alert('Senha alterada com sucesso!');
+            window.location.href = '/'; // Redireciona para a página de login
+        } else {
+            alert('Erro ao alterar a senha. Tente novamente!');
+        }
 });

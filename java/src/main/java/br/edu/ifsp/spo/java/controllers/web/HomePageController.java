@@ -1,4 +1,4 @@
-package br.edu.ifsp.spo.java.controller.web;
+package br.edu.ifsp.spo.java.controllers.web;
 
 import br.edu.ifsp.spo.java.service.UsuarioService;
 import org.springframework.stereotype.Controller;
@@ -24,8 +24,8 @@ public class HomePageController {
         }
 
         String email = (String) session.getAttribute("usuario");
-        String usuario = usuarioService.findByEmail(email).get().getNome();
-        model.addAttribute("nome", usuario);
+        String nomeUsuario = usuarioService.findByEmail(email).get().getNome();
+        model.addAttribute("nome", nomeUsuario);
 
         return "index";
     }

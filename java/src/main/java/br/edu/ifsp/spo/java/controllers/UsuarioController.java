@@ -1,4 +1,4 @@
-package br.edu.ifsp.spo.java.controller;
+package br.edu.ifsp.spo.java.controllers;
 
 import br.edu.ifsp.spo.java.dto.response.LoginResponseDTO;
 import br.edu.ifsp.spo.java.model.UsuarioModel;
@@ -30,13 +30,18 @@ public class UsuarioController {
     // Criar Usuario
     @PostMapping
     public ResponseEntity<UsuarioModel> create(@RequestBody UsuarioModel usuarioModel) {
+        String email = usuarioModel.getEmail();
+        if (usuarioService.findByEmail(email).isPresent()){
+            return ResponseEntity.status(401).build();
+        }
+
         UsuarioModel criado = usuarioService.save(usuarioModel);
         return ResponseEntity.status(201).body(criado);
     }
 
     /// Sub-Rotas
 
-    // Rota Para pesquiar por Id
+    // Rota Para pesquisar por Id
     @GetMapping("/{id}")
     public ResponseEntity<UsuarioModel> getById(@PathVariable Long id) {
         Optional<UsuarioModel> usuarioOpt = usuarioService.findById(id);

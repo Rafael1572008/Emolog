@@ -1,4 +1,4 @@
-package br.edu.ifsp.spo.java.controller.web;
+package br.edu.ifsp.spo.java.controllers.web;
 
 import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
