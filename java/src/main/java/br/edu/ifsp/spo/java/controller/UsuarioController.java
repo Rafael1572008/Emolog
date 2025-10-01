@@ -51,7 +51,7 @@ public class UsuarioController {
         Optional<UsuarioModel> usuarioOpt = usuarioService.findByEmail(loginResponse.getEmail());
 
         if (usuarioOpt.isPresent() && usuarioOpt.get().getSenhaHash().equals(loginResponse.getSenha())) {
-            session.setAttribute("usuario", usuarioOpt.get().getNome());
+            session.setAttribute("usuario", loginResponse.getEmail());
             return ResponseEntity.ok(usuarioOpt.get()); // 200 OK
         }
 
