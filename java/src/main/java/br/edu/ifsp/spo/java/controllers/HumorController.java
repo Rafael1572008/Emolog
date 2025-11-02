@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 @RestController
 @RequestMapping("/humor")
@@ -30,12 +31,32 @@ public class HumorController {
         return humorService.save(humorModel);
     }
 
-    /// Criar delete nesse e nos outros
 
+    // Deletar Humor
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteById(@PathVariable Long id){
+        // Chamar o servico
+        humorService.delete(id);
+
+        // Retorna 200 caso de bom
+        return ResponseEntity.noContent().build();
+    }
+
+
+    /// Patch, Adicioanr tags
+    @PatchMapping("/{id}/tags")
+    public ResponseEntity<Void> adicionarTags(
+            @PathVariable Long id,
+            @RequestBody Set<Long> tagsIds){
+
+        humorService.adicionarTags(id, tagsIds);
+        return ResponseEntity.noContent().build();
+    }
 
 
     /// Procurar humor por Id
-    public ResponseEntity<HumorModel> getById(@PathVariable Long id){ /// PathVariables para pegar id da URL
+    @GetMapping("/{id}")
+    public ResponseEntity<HumorModel> getById(@PathVariable Long id) {
         Optional<HumorModel> humorOptional = humorService.findById(id);
         return humorOptional
                 .map(ResponseEntity::ok)

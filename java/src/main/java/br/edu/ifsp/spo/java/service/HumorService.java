@@ -1,18 +1,26 @@
 package br.edu.ifsp.spo.java.service;
 
 import br.edu.ifsp.spo.java.model.HumorModel;
+import br.edu.ifsp.spo.java.model.TagModel;
 import br.edu.ifsp.spo.java.repository.HumorRepository;
+import br.edu.ifsp.spo.java.repository.TagRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
+
 
 @Service
 public class HumorService {
     private HumorRepository humorRepository;
+    private TagRepository tagRepository;
 
-    public HumorService(HumorRepository humorRepository) {
+
+    public HumorService(HumorRepository humorRepository, TagRepository tagRepository) {
         this.humorRepository = humorRepository;
+        this.tagRepository = tagRepository;
     }
 
     /// Listar Todos os humores
@@ -33,5 +41,24 @@ public class HumorService {
     /// Procurar humor pelo id
     public Optional<HumorModel> findById(Long id){ // Me obriga a usar Optinal :( [Verei o pq]
         return humorRepository.findById(id);
+    }
+
+    /// Adicionar Tag
+    public void adicionarTags(Long id, Set<Long> tagsIds) {
+        HumorModel humor = humorRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Humor não encontrado"));
+
+        Set<TagModel> tagsNovas = new HashSet<>(tagRepository.findAllById(tagsIds));
+        if (tagsNovas.size() != tagsIds.size()) {
+            throw new RuntimeException("Tag não encontrada");
+        }
+
+        Set<TagModel> tagsAtuais = new HashSet<>(humor.getTags());
+
+        tagsAtuais.addAll(tagsNovas);
+
+        humor.setTags(tagsAtuais);
+
+        humorRepository.save(humor);
     }
 }

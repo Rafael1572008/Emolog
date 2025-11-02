@@ -3,6 +3,7 @@ package br.edu.ifsp.spo.java.model;
 import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity /// Definir classe como entidade
@@ -33,7 +34,7 @@ public class HumorModel {
             joinColumns = @JoinColumn(name = "registro_id"),
             inverseJoinColumns = @JoinColumn(name = "tag_id")
     )
-    private Set<TagModel> tags;
+    private Set<TagModel> tags = new HashSet<>();
 
     /// Construtores
 
