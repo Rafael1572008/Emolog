@@ -42,7 +42,17 @@ public class HumorController {
         return ResponseEntity.noContent().build();
     }
 
+    /// Procurar humor por Id
+    @GetMapping("/{id}")
+    public ResponseEntity<HumorModel> getById(@PathVariable Long id) {
+        Optional<HumorModel> humorOptional = humorService.findById(id);
+        return humorOptional
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
+    }
 
+
+    /// === Tags ===
     /// Patch, Adicioanr tags
     @PatchMapping("/{id}/tags")
     public ResponseEntity<Void> adicionarTags(
@@ -53,13 +63,29 @@ public class HumorController {
         return ResponseEntity.noContent().build();
     }
 
+    ///  Deletar tag
+    @DeleteMapping("/{id}/tags")
+    public ResponseEntity<Void> removerTags(
+            @PathVariable Long id,
+            @RequestBody Set<Long> tagIds){
 
-    /// Procurar humor por Id
-    @GetMapping("/{id}")
-    public ResponseEntity<HumorModel> getById(@PathVariable Long id) {
-        Optional<HumorModel> humorOptional = humorService.findById(id);
-        return humorOptional
-                .map(ResponseEntity::ok)
-                .orElse(ResponseEntity.notFound().build());
+        humorService.removeTags(id, tagIds);
+        return ResponseEntity.noContent().build();
+    }
+
+
+    /// === Humor Titulo ===
+    // alterar humor
+    @PatchMapping("/{id}/texto")
+    public ResponseEntity<Void> adicionarTags(
+            @PathVariable Long id,
+            @RequestBody String newText){
+
+        // Finalizar (Rafa)
+        humorService.updateHumor(id, newText);
+
+
+        return ResponseEntity.noContent().build();
+
     }
 }
