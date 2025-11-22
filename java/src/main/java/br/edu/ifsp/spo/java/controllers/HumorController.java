@@ -1,11 +1,13 @@
 package br.edu.ifsp.spo.java.controllers;
 
+import br.edu.ifsp.spo.java.dto.response.HumorDiarioDTO;
 import br.edu.ifsp.spo.java.model.HumorModel;
 import br.edu.ifsp.spo.java.service.HumorService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 
@@ -77,15 +79,30 @@ public class HumorController {
     /// === Humor Titulo ===
     // alterar humor
     @PatchMapping("/{id}/texto")
-    public ResponseEntity<Void> adicionarTags(
+    public ResponseEntity<HumorModel> alterTitleHumor(
             @PathVariable Long id,
-            @RequestBody String newText){
+            @RequestBody Map<String, String> body) {
 
-        // Finalizar (Rafa)
-        humorService.updateHumor(id, newText);
+        String novoTexto = body.get("texto");
+        if (novoTexto == null || novoTexto.trim().isBlank()) {
+            return ResponseEntity.badRequest().build();
+        }
 
+        HumorModel atualizado = humorService.updateTextoHumor(id, novoTexto.trim());
+        return ResponseEntity.ok(atualizado);
+    }
 
-        return ResponseEntity.noContent().build();
+    /// Gráfico (Não está diferenciando os usuários, junta)
+    @GetMapping("/diario")
+    public ResponseEntity<List<HumorDiarioDTO>> getHumorDiario() {
+        List<HumorDiarioDTO> resultado = humorService.calcularHumorDiario();
+        return  ResponseEntity.ok(resultado);
+    }
 
+    /// Importação de lote
+    @PostMapping("/batch")
+    public ResponseEntity<List<HumorModel>> createBatch(@RequestBody List<HumorModel> humores) {
+        List<HumorModel> salvos = humorService.saveAll(humores);
+        return ResponseEntity.ok(salvos);
     }
 }

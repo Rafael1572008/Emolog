@@ -1,5 +1,6 @@
 package br.edu.ifsp.spo.java.service;
 
+import br.edu.ifsp.spo.java.dto.response.HumorDiarioDTO;
 import br.edu.ifsp.spo.java.model.HumorModel;
 import br.edu.ifsp.spo.java.model.TagModel;
 import br.edu.ifsp.spo.java.repository.HumorRepository;
@@ -7,10 +8,8 @@ import br.edu.ifsp.spo.java.repository.TagRepository;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import java.util.HashSet;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
+import java.util.stream.Collectors;
 
 
 @Service
@@ -86,21 +85,57 @@ public class HumorService {
     }
 
     /// Altera Humor, texto
-    public Optional<HumorModel> updateHumor(Long id, String newText){
-        // Buscar humor pelo ID
+    public HumorModel updateTextoHumor(Long id, String novoTexto) {
         HumorModel humor = humorRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Humor não encontrado"));
 
-        // Humor
-        Optional<HumorModel> existHumor = humorRepository.findById(id);
-        if (existHumor.isPresent()) {
-            HumorModel updateHumor = existHumor.get();
+        humor.setTexto(novoTexto);
+        return humorRepository.save(humor);
+    }
 
-            updateHumor.setTexto(newText);
+    // Calcular a média de emoções diaria do User
+    public List<HumorDiarioDTO> calcularHumorDiario() {
+        Map<String, List<HumorModel>> porDia = humorRepository.findAll()
+                .stream()
+                .collect(Collectors.groupingBy(h -> h.getDataHora().toLocalDate().toString()));
 
-            humorRepository.save(humor);
-        }
-        return existHumor;
+        return porDia.entrySet().stream()
+                .map(entry -> {
+                    String data = entry.getKey();
+                    List<HumorModel> doDia = entry.getValue();
+
+                    double media = doDia.stream()
+                            .mapToInt(h -> switch (h.getHumor()) {
+                                case "Radiante"  -> 5;
+                                case "Bem"       -> 4;
+                                case "Médio"     -> 3;
+                                case "Mal"       -> 2;
+                                case "Horrível"  -> 1;
+                                default          -> 3;
+                            })
+                            .average()
+                            .orElse(3.0);
+
+                    int valorArredondado = (int) Math.round(media);
+                    String humorFinal = switch (valorArredondado) {
+                        case 5 -> "Radiante";
+                        case 4 -> "Bem";
+                        case 3 -> "Médio";
+                        case 2 -> "Mal";
+                        default -> "Horrível";
+                    };
+
+                    System.out.println(data);
+
+                    return new HumorDiarioDTO(data, humorFinal, valorArredondado, doDia.size());
+                })
+                .sorted(Comparator.comparing(HumorDiarioDTO::getData))
+                .toList();
+    }
+
+    // Importar de lote
+    public List<HumorModel> saveAll(List<HumorModel> humores) {
+        return humorRepository.saveAll(humores);
     }
 
 
