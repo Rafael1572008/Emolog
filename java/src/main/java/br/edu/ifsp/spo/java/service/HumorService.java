@@ -93,7 +93,7 @@ public class HumorService {
         return humorRepository.save(humor);
     }
 
-    // Calcular a média de emoções diaria do User
+    // Calcular a média de emoções diaria do User (Aredondar para cima)
     public List<HumorDiarioDTO> calcularHumorDiario() {
         Map<String, List<HumorModel>> porDia = humorRepository.findAll()
                 .stream()
@@ -137,6 +137,4 @@ public class HumorService {
     public List<HumorModel> saveAll(List<HumorModel> humores) {
         return humorRepository.saveAll(humores);
     }
-
-
 }
