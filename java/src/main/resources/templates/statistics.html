@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Estatísticas de Humor</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" th:href="@{/css/style_Statics.css}">
+</head>
+<body>
+
+<div class="container">
+    <header class="header">
+        <h1>Humor Diário (Ainda aglutinado)</h1>
+        <p class="subtitle">Sua jornada emocional, dia após dia</p>
+    </header>
+
+    <main class="chart-wrapper">
+        <canvas id="graficoHumor"></canvas>
+    </main>
+
+    <footer class="footer">
+        <div class="legend">
+            <span><i class="dot" data-level="5"></i> Radiante</span>
+            <span><i class="dot" data-level="4"></i> Bem</span>
+            <span><i class="dot" data-level="3"></i> Médio</span>
+            <span><i class="dot" data-level="2"></i> Mal</span>
+            <span><i class="dot" data-level="1"></i> Horrível</span>
+        </div>
+    </footer>
+</div>
+
+<script th:src="@{/js/statiscs.js}"></script>
+</body>
+</html>
