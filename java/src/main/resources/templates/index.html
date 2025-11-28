@@ -7,11 +7,33 @@
 </head>
 <body>
 <div class="container">
+
+    <div class="menu-container">
+        <button class="menu-button" onclick="toggleMenu(this)">⋮</button>
+        <div class="menu-content">
+            <a class="btn-menu" href="">Acessar perfil</a>
+            <a class="btn-menu" href="/alterarsenha">Alterar senha</a>
+            <a class="btn-menu" href="/usuario/logout">Sair</a>
+        </div>
+    </div>
+
     <div class="home-box">
         <h1>Bem-vindo, <span th:text="${nome}"></span>!</h1>
-        <a class="btn" href="/alterarsenha">Alterar senha</a>
-        <a class="btn" href="/usuario/logout">Logout</a>
+
+        <div class="historico-humor">
+            <div class="container-humordia">
+                <p>&nbsp;</p> <!-- Futuros containers provavelmente -->
+                <p>&nbsp;</p>
+                <p>&nbsp;</p>
+                <p>&nbsp;</p>
+            </div>
+        </div>
+
+        <a class="btn" href="">✚</a>
     </div>
 </div>
+
+<script th:src="@{/js/menu.js}"></script>
+
 </body>
 </html>

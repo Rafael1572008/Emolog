@@ -47,3 +47,90 @@ body {
 .btn:hover {
   opacity: 0.9;
 }
+
+
+/* === BOTÃO DE MENU (...) CANTO SUPERIOR DIREITO */
+
+ /* três pontinhos */
+ .menu-container {
+     position: fixed;
+     top: 10px;
+     right: 10px;
+     z-index: 1000;
+ }
+
+ /* botão dos pontinhos */
+ .menu-button {
+     background: none;
+     border: none;
+     font-size: 24px;
+     cursor: pointer;
+     padding: 8px;
+     border-radius: 50%;
+     transition: background 0.2s;
+     color: white;
+ }
+
+ .menu-button:hover {
+     background: rgba(0, 0, 0, 0.1);
+ }
+
+ /* dropdown */
+ .menu-content {
+     display: none;
+     position: absolute;
+     top: 75px;
+     right: 0;
+     background: #1a1a1a;
+     border-radius: 8px;
+     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+     min-width: 160px;
+     overflow: hidden;
+ }
+
+
+ .menu-container.show .menu-content {
+     display: block;
+ }
+
+ .menu-button {
+     font-size: 35px;
+     padding: 15px;
+ }
+
+ .menu-content {
+     min-width: 220px;
+ }
+
+
+ .menu-content button {
+     padding: 14px;
+     font-size: 15px;
+ }
+
+ /* -> Botões do menu */
+
+ .btn-menu {
+   display: inline-block;
+   padding: 10px 25px;
+   background: #1a1a1a;
+   border: none;
+   border-radius: 0px;
+   color: white;
+   font-size: 16px;
+   font-weight: bold;
+   cursor: pointer;
+   text-decoration: none;
+   transition: opacity 0.2s;
+ }
+
+ .btn-menu:hover {
+   opacity: 0.9;
+ }
+
+/* == A SER FEITO == */
+
+.historico-humor {
+    background: #292929;
+    border-radius: 10px;
+}
