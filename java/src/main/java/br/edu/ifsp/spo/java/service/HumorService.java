@@ -137,4 +137,9 @@ public class HumorService {
     public List<HumorModel> saveAll(List<HumorModel> humores) {
         return humorRepository.saveAll(humores);
     }
+
+    // Importar humor por user
+    public List<HumorModel> findByIdUser(Long usuarioId) {
+        return humorRepository.findByUsuarioIdOrderByDataHoraDesc(usuarioId);
+    }
 }

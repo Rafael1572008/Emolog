@@ -57,6 +57,7 @@ public class UsuarioController {
 
         if (usuarioOpt.isPresent() && usuarioOpt.get().getSenhaHash().equals(loginResponse.getSenha())) {
             session.setAttribute("usuario", loginResponse.getEmail());
+            session.setAttribute("idUser", usuarioOpt.get().getId());  // adiciona o ID (Thiago)
             return ResponseEntity.ok(usuarioOpt.get()); // 200 OK
         }
 
