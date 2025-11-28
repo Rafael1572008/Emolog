@@ -105,4 +105,11 @@ public class HumorController {
         List<HumorModel> salvos = humorService.saveAll(humores);
         return ResponseEntity.ok(salvos);
     }
+
+    /// Humor por UserID
+    @GetMapping("/{id}/humor")
+    public ResponseEntity<List<HumorModel>> getHumorByIdUser(@PathVariable Long id){
+        List<HumorModel> humores = humorService.findByIdUser(id);
+        return ResponseEntity.ok(humores);
+    }
 }
