@@ -18,8 +18,9 @@ public class HumorModel {
     @JoinColumn(name = "usuario_id", nullable = false)
     private UsuarioModel usuario;
 
+    @Enumerated(EnumType.STRING)
     @Column(name = "humor", nullable = false)
-    private String humor;
+    private HumorEnum humor;
 
     @Column(name = "texto")
     private String texto;
@@ -40,7 +41,7 @@ public class HumorModel {
 
     public HumorModel(){}
 
-    public HumorModel(Long id, LocalDateTime dataHora, String texto, String humor, UsuarioModel usuario) {
+    public HumorModel(Long id, LocalDateTime dataHora, String texto, HumorEnum humor, UsuarioModel usuario) {
         this.id = id;
         this.dataHora = dataHora;
         this.texto = texto;
@@ -65,11 +66,11 @@ public class HumorModel {
         this.texto = texto;
     }
 
-    public String getHumor() {
+    public HumorEnum getHumor() {
         return humor;
     }
 
-    public void setHumor(String humor) {
+    public void setHumor(HumorEnum humor) {
         this.humor = humor;
     }
 

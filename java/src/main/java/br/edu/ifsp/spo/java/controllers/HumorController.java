@@ -1,6 +1,7 @@
 package br.edu.ifsp.spo.java.controllers;
 
 import br.edu.ifsp.spo.java.dto.response.HumorDiarioDTO;
+import br.edu.ifsp.spo.java.model.HumorEnum;
 import br.edu.ifsp.spo.java.model.HumorModel;
 import br.edu.ifsp.spo.java.service.HumorService;
 import org.springframework.http.ResponseEntity;
@@ -121,5 +122,11 @@ public class HumorController {
 
         List<HumorModel> humores = humorService.findByIdUser(idUser);
         return ResponseEntity.ok(humores);
+    }
+
+    /// Obter valores possiveis para humores
+    @GetMapping("/humores")
+    public HumorEnum[] listaHumores(){
+        return HumorEnum.values();
     }
 }

@@ -1,6 +1,7 @@
 package br.edu.ifsp.spo.java.service;
 
 import br.edu.ifsp.spo.java.dto.response.HumorDiarioDTO;
+import br.edu.ifsp.spo.java.model.HumorEnum;
 import br.edu.ifsp.spo.java.model.HumorModel;
 import br.edu.ifsp.spo.java.model.TagModel;
 import br.edu.ifsp.spo.java.repository.HumorRepository;
@@ -94,7 +95,8 @@ public class HumorService {
 
     // Calcular a média de emoções diaria do User (Aredondar para cima)
     public List<HumorDiarioDTO> calcularHumorDiario(Long idUser) {
-        Map<String, List<HumorModel>> porDia = humorRepository.findByUsuarioIdOrderByDataHoraDesc(idUser)
+        Map<String, List<HumorModel>> porDia = humorRepository
+                .findByUsuarioIdOrderByDataHoraDesc(idUser)
                 .stream()
                 .collect(Collectors.groupingBy(h -> h.getDataHora().toLocalDate().toString()));
 
@@ -104,29 +106,20 @@ public class HumorService {
                     List<HumorModel> doDia = entry.getValue();
 
                     double media = doDia.stream()
-                            .mapToInt(h -> switch (h.getHumor()) {
-                                case "Radiante"  -> 5;
-                                case "Bem"       -> 4;
-                                case "Médio"     -> 3;
-                                case "Mal"       -> 2;
-                                case "Horrível"  -> 1;
-                                default          -> 3;
-                            })
+                            .mapToInt(h -> h.getHumor().getValor())
                             .average()
                             .orElse(3.0);
 
                     int valorArredondado = (int) Math.round(media);
-                    String humorFinal = switch (valorArredondado) {
-                        case 5 -> "Radiante";
-                        case 4 -> "Bem";
-                        case 3 -> "Médio";
-                        case 2 -> "Mal";
-                        default -> "Horrível";
-                    };
 
-                    System.out.println(data);
+                    HumorEnum humorFinal = HumorEnum.fromValor(valorArredondado);
 
-                    return new HumorDiarioDTO(data, humorFinal, valorArredondado, doDia.size());
+                    return new HumorDiarioDTO(
+                            data,
+                            humorFinal.name(), // envia para o front em string amigável
+                            valorArredondado,
+                            doDia.size()
+                    );
                 })
                 .sorted(Comparator.comparing(HumorDiarioDTO::getData))
                 .toList();
