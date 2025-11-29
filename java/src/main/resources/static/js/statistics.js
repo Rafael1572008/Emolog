@@ -143,9 +143,27 @@ function carregarCalendario() {
             div.textContent = dia;
         }
 
+        div.addEventListener("mouseenter", (e) => {
+            if (!humorDia) return;
+
+            const tooltip = document.getElementById("calendar-tooltip");
+
+            tooltip.innerHTML = `
+                <strong>${dataISO}</strong><br>
+                ${nomesHumor[humorDia.valor]} • ${humorDia.valor}/5<br>
+                ${humorDia.registrosNoDia} registro${humorDia.registrosNoDia > 1 ? "s" : ""}
+            `;
+
+            tooltip.style.left = e.pageX + 15 + "px";
+            tooltip.style.top = e.pageY + 15 + "px";
+            tooltip.style.opacity = "1";
+        });
+
+
         calendarGrid.appendChild(div);
     }
 }
+
 
 document.getElementById("prevMonth").addEventListener("click", () => {
     currentDate.setMonth(currentDate.getMonth() - 1);

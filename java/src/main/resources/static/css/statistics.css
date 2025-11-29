@@ -173,6 +173,22 @@ body {
     background: transparent;
 }
 
+.calendar-tooltip {
+    position: absolute;
+    background: #1e1e2f;
+    color: #fff;
+    padding: 8px 12px;
+    border-radius: 8px;
+    font-size: 13px;
+    line-height: 1.4;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.35);
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.15s ease;
+    z-index: 999;
+    white-space: nowrap;
+}
+
 .divider {
     margin: 4rem 0 2.5rem 0;
     border: none;
