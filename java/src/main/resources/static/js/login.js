@@ -36,19 +36,4 @@ document.addEventListener('DOMContentLoaded', () => {
         const re = /\S+@\S+\.\S+/;
         return re.test(email);
     }
-
-    // Social login
-    const googleBtn = document.querySelector('.google');
-    const facebookBtn = document.querySelector('.facebook');
-
-    [googleBtn, facebookBtn].forEach(btn => {
-        btn.addEventListener('click', (e) => {
-            e.preventDefault();
-            window.open(
-                btn.getAttribute('href'),
-                '_blank',
-                'width=500,height=600,top=100,left=100'
-            );
-        });
-    });
 });

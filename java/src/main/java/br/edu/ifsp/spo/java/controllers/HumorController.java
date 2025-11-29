@@ -1,13 +1,18 @@
 package br.edu.ifsp.spo.java.controllers;
 
+import br.edu.ifsp.spo.java.dto.response.CriarHumorDTO;
 import br.edu.ifsp.spo.java.dto.response.HumorDiarioDTO;
 import br.edu.ifsp.spo.java.model.HumorEnum;
 import br.edu.ifsp.spo.java.model.HumorModel;
+import br.edu.ifsp.spo.java.model.UsuarioModel;
+import br.edu.ifsp.spo.java.repository.UsuarioRepository;
 import br.edu.ifsp.spo.java.service.HumorService;
+import br.edu.ifsp.spo.java.service.UsuarioService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import jakarta.servlet.http.HttpSession;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -18,10 +23,12 @@ import java.util.Set;
 @RequestMapping("/humor")
 public class HumorController {
     private final HumorService humorService;
+    private final UsuarioService usuarioService;
 
     /// Contrutor
-    public HumorController(HumorService humorService) {
+    public HumorController(HumorService humorService, UsuarioService usuarioService) {
         this.humorService = humorService;
+        this.usuarioService = usuarioService;
     }
 
     /// Rota pata retornar Todos os user
@@ -32,8 +39,23 @@ public class HumorController {
 
     /// Rota para criar humor
     @PostMapping
-    public HumorModel create(@RequestBody HumorModel humorModel){
-        return humorService.save(humorModel);
+    public ResponseEntity<HumorModel> create(@RequestBody CriarHumorDTO dto, HttpSession session) {
+        String email = session.getAttribute("usuario").toString();
+        Optional<UsuarioModel> usuarioOpt = usuarioService.findByEmail(email);
+
+        UsuarioModel usuario = usuarioOpt.orElseThrow(() ->
+            new RuntimeException("Usuário não encontrado"));
+
+        HumorModel humor = new HumorModel();
+
+        HumorEnum humorEnum = HumorEnum.fromValor(dto.getHumor());
+        humor.setTexto(dto.getTexto());
+        humor.setHumor(humorEnum);
+        humor.setUsuario(usuario);
+        humor.setDataHora(LocalDateTime.now());
+
+        HumorModel criado = humorService.save(humor);
+        return ResponseEntity.status(201).body(criado);
     }
 
 

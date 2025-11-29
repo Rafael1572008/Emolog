@@ -72,7 +72,7 @@
     <div class="home-box">
         <h2>Registrar humor</h2>
 
-        <form method="post" action="/registrar-humor" th:action="@{/registrar-humor}" id="moodForm">
+        <form id="moodForm">
             <p class="question">Como você se sente hoje?</p>
 
             <div class="mood-options" aria-label="Selecione seu humor">
@@ -109,7 +109,7 @@
                 <textarea id="note" name="note" placeholder="Ex.: Dormi bem, fiz exercícios..."></textarea>
             </div>
 
-            <button class="btn" type="submit">Salvar humor de hoje</button>
+            <button class="btn" type="submit">Salvar</button>
             <div id="statusText" class="status-text"></div>
         </form>
     </div>
@@ -152,5 +152,6 @@
         }
     });
 </script>
+<script th:src="@{/js/registrarHumor.js}"></script>
 </body>
 </html>
