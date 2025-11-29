@@ -151,4 +151,17 @@ public class HumorController {
     public HumorEnum[] listaHumores(){
         return HumorEnum.values();
     }
+
+    /// Obter humores por tags
+    @GetMapping("/filtro/{humorTipo}")
+    public ResponseEntity<List<HumorModel>> getHumorByHumor(
+            HttpSession session,
+            @PathVariable HumorEnum humorTipo){
+
+        // Obter Id pela sessão
+        Long idUser = (Long) session.getAttribute("idUser");
+
+        List<HumorModel> humores = humorService.findHumorByTag(idUser, humorTipo);
+        return ResponseEntity.ok(humores);
+    }
 }
