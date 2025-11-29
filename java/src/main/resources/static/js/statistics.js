@@ -1,7 +1,7 @@
 // statistics.js
 
 // Dashboard
-const coresHumor = { 5: "#10b981", 4: "#3b82f6", 3: "#fbbf24", 2: "#f97316", 1: "#ef4444" };
+const coresHumor = { 5: "#3b82f6", 4: "#10b981", 3: "#fbbf24", 2: "#f97316", 1: "#ef4444" };
 const nomesHumor = { 5: "Radiante", 4: "Bem", 3: "Médio", 2: "Mal", 1: "Horrível" };
 
 document.addEventListener("DOMContentLoaded", async () => {

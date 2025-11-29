@@ -87,8 +87,8 @@ body {
     box-shadow: 0 0 12px rgba(0,0,0,0.6);
 }
 
-.dot[data-level="5"]  { background: #10b981; }
-.dot[data-level="4"]  { background: #3b82f6; }
+.dot[data-level="5"]  { background: #3b82f6; }
+.dot[data-level="4"]  { background: #10b981; }
 .dot[data-level="3"]  { background: #fbbf24; }
 .dot[data-level="2"]  { background: #f97316; }
 .dot[data-level="1"]  { background: #ef4444; }
@@ -207,8 +207,8 @@ body {
 .mood-1 { background: #ef4444; }
 .mood-2 { background: #f97316; }
 .mood-3 { background: #fbbf24; color: #000; }
-.mood-4 { background: #3b82f6; }
-.mood-5 { background: #10b981; }
+.mood-4 { background: #10b981; }
+.mood-5 { background: #3b82f6; }
 
 .mood-face {
     font-size: 1.6rem;
@@ -224,3 +224,99 @@ body {
     flex-direction: column;
     gap: 10px
 }
+
+/* === BOTÃO DE MENU (...) CANTO SUPERIOR DIREITO */
+
+ /* três pontinhos */
+ .menu-container {
+     position: fixed;
+     top: 10px;
+     right: 20px;
+     z-index: 1000;
+ }
+
+ /* botão dos pontinhos */
+ .menu-button {
+     background: none;
+     border: none;
+     font-size: 24px;
+     cursor: pointer;
+     padding: 8px;
+     border-radius: 50%;
+     transition: background 0.2s;
+     color: white;
+ }
+
+ .menu-button:hover {
+     background: rgba(0, 0, 0, 0.1);
+ }
+
+ /* dropdown */
+ .menu-content {
+     display: none;
+     position: absolute;
+     top: 75px;
+     right: 0;
+     background: #1a1a1a;
+     border-radius: 8px;
+     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+     min-width: 160px;
+     overflow: hidden;
+ }
+
+
+ .menu-container.show .menu-content {
+     display: block;
+ }
+
+ .menu-button {
+     font-size: 35px;
+     padding: 15px;
+ }
+
+ .menu-content {
+     min-width: 220px;
+ }
+
+
+ .menu-content button {
+     padding: 14px;
+     font-size: 15px;
+ }
+
+ /* -> Botões do menu */
+
+ .btn-menu {
+   display: inline-block;
+   padding: 10px 25px;
+   background: #1a1a1a;
+   border: none;
+   border-radius: 0px;
+   color: white;
+   font-size: 16px;
+   font-weight: bold;
+   cursor: pointer;
+   text-decoration: none;
+   transition: opacity 0.2s;
+ }
+
+ .btn-menu:hover {
+   opacity: 0.9;
+ }
+
+ /**/
+ .btn {
+   width: 100%;
+   padding: 12px;
+   border: none;
+   border-radius: 8px;
+   color: white;
+   font-size: 16px;
+   cursor: pointer;
+   margin-top: 15px;
+   font-weight: bold;
+ }
+
+ .btn:hover {
+   opacity: 0.9;
+ }

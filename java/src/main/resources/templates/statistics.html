@@ -15,6 +15,14 @@
     </a>
 </div>
 
+<div class="menu-container" id="menuContainer">
+    <button class="menu-button" id="menuButton" aria-label="Abrir menu">⋮</button>
+    <div class="menu-content">
+        <a class="btn-menu" href="/alterarsenha">Alterar senha</a>
+        <a class="btn-menu" href="/usuario/logout">Sair</a>
+    </div>
+</div>
+
 <!--Dashboard-->
 <div class="container">
     <header class="header">
@@ -65,6 +73,20 @@
     </section>
 </div>
 <div id="calendar-tooltip" class="calendar-tooltip"></div>
+
+<script>
+    const menuContainer = document.getElementById('menuContainer');
+    const menuButton = document.getElementById('menuButton');
+
+    menuButton.addEventListener('click', () => {
+        menuContainer.classList.toggle('show');
+    });
+
+    document.addEventListener('click', e => {
+        if (!menuContainer.contains(e.target)) menuContainer.classList.remove('show');
+    });
+</script>
+
 <script th:src="@{/js/statistics.js}"></script>
 </body>
 </html>
