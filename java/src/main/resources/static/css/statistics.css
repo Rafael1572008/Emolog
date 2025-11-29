@@ -213,3 +213,14 @@ body {
 .mood-face {
     font-size: 1.6rem;
 }
+
+/* === BOTÃO DE NAVEGAÇÃO CANTO SUPERIOR ESQUERDO*/
+.botoes-navegacao {
+    position: fixed;
+    top: 22px;
+    left: 32px;
+    z-index: 1000;
+    display: flex;
+    flex-direction: column;
+    gap: 10px
+}
