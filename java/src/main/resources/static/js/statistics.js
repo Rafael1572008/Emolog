@@ -143,6 +143,9 @@ function carregarCalendario() {
             div.textContent = dia;
         }
 
+        // -----------------------------------------------------
+        // ➤ Tooltip igual ao do Dashboard
+        // -----------------------------------------------------
         div.addEventListener("mouseenter", (e) => {
             if (!humorDia) return;
 
@@ -159,6 +162,17 @@ function carregarCalendario() {
             tooltip.style.opacity = "1";
         });
 
+        div.addEventListener("mousemove", (e) => {
+            const tooltip = document.getElementById("calendar-tooltip");
+            tooltip.style.left = e.pageX + 15 + "px";
+            tooltip.style.top = e.pageY + 15 + "px";
+        });
+
+        div.addEventListener("mouseleave", () => {
+            const tooltip = document.getElementById("calendar-tooltip");
+            tooltip.style.opacity = "0";
+        });
+        // -----------------------------------------------------
 
         calendarGrid.appendChild(div);
     }
