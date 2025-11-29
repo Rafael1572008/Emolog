@@ -151,8 +151,8 @@ body {
 }
 
 .calendar-day {
-    width: 48px;
-    height: 48px;
+    width: 45px;
+    height: 45px;
     border-radius: 50%;
     margin: auto;
     display: flex;
