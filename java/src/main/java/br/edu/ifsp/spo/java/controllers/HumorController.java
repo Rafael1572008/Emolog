@@ -117,7 +117,7 @@ public class HumorController {
         return ResponseEntity.ok(atualizado);
     }
 
-    /// Gráfico (Não está diferenciando os usuários, junta)
+    /// Gráfico
     @GetMapping("/diario")
     public ResponseEntity<List<HumorDiarioDTO>> getHumorDiario(HttpSession session) {
 
