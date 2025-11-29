@@ -1,6 +1,6 @@
 body {
   margin: 0;
-  font-family: Arial, sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
   background: #000;
   height: 100vh;
   display: flex;
@@ -96,4 +96,16 @@ body {
 
 .btn-voltar:hover {
   opacity: 0.9;
+}
+
+/*LOGO*/
+
+.logo img {
+    width: 100px;
+    height: 100px;
+}
+
+.logo {
+  margin-bottom: 30px;
+  justify-content: center;
 }
