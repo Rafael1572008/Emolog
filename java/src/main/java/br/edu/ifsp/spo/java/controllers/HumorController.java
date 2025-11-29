@@ -96,7 +96,7 @@ public class HumorController {
     @GetMapping("/diario")
     public ResponseEntity<List<HumorDiarioDTO>> getHumorDiario() {
         List<HumorDiarioDTO> resultado = humorService.calcularHumorDiario();
-        return  ResponseEntity.ok(resultado);
+        return ResponseEntity.ok(resultado);
     }
 
     /// Importação de lote

@@ -1,4 +1,6 @@
-// statiscs.js
+// statistics.js
+
+// Dashboard
 const coresHumor = { 5: "#10b981", 4: "#3b82f6", 3: "#fbbf24", 2: "#f97316", 1: "#ef4444" };
 const nomesHumor = { 5: "Radiante", 4: "Bem", 3: "Médio", 2: "Mal", 1: "Horrível" };
 
@@ -81,4 +83,82 @@ document.addEventListener("DOMContentLoaded", async () => {
         console.error(e);
         document.body.innerHTML += '<p style="text-align:center;color:#f87171;margin-top:3rem;">Erro ao carregar os dados</p>';
     }
+});
+
+// Calendário
+
+let currentDate = new Date();
+const calendarGrid = document.getElementById("calendarGrid");
+const calendarTitle = document.getElementById("calendarTitle");
+let dadosHumor = []; // Preenchido pela API acima
+
+const faces = {
+    1: "☹️",
+    2: "😕",
+    3: "🙂",
+    4: "😊",
+    5: "😄"
+};
+
+function carregarCalendario() {
+    const ano = currentDate.getFullYear();
+    const mes = currentDate.getMonth();
+
+    calendarTitle.textContent =
+        currentDate.toLocaleString("pt-BR", { month: "long" }) + " " + ano;
+
+    calendarGrid.innerHTML = "";
+
+    const nomesDias = ["Dom", "Seg", "Ter", "Qua", "Qui", "Sex", "Sáb"];
+    nomesDias.forEach(n => {
+        const div = document.createElement("div");
+        div.textContent = n;
+        div.classList.add("day-name");
+        calendarGrid.appendChild(div);
+    });
+
+    const primeiroDiaSemana = new Date(ano, mes, 1).getDay();
+    const diasNoMes = new Date(ano, mes + 1, 0).getDate();
+
+    for (let i = 0; i < primeiroDiaSemana; i++) {
+        const empty = document.createElement("div");
+        empty.classList.add("calendar-empty");
+        calendarGrid.appendChild(empty);
+    }
+
+    for (let dia = 1; dia <= diasNoMes; dia++) {
+        const div = document.createElement("div");
+
+        const dataISO = `${ano}-${String(mes+1).padStart(2,"0")}-${String(dia).padStart(2,"0")}`;
+
+        const humorDia = dadosHumor.find(d => d.data === dataISO);
+
+        div.classList.add("calendar-day");
+
+        if (humorDia) {
+            div.classList.add(`mood-${humorDia.valor}`);
+            div.innerHTML = `<span class='mood-face'>${faces[humorDia.valor]}</span>`;
+        } else {
+            div.style.opacity = "0.25";
+            div.textContent = dia;
+        }
+
+        calendarGrid.appendChild(div);
+    }
+}
+
+document.getElementById("prevMonth").addEventListener("click", () => {
+    currentDate.setMonth(currentDate.getMonth() - 1);
+    carregarCalendario();
+});
+
+document.getElementById("nextMonth").addEventListener("click", () => {
+    currentDate.setMonth(currentDate.getMonth() + 1);
+    carregarCalendario();
+});
+
+document.addEventListener("DOMContentLoaded", async () => {
+    const resp = await fetch("http://localhost:8080/humor/diario");
+    dadosHumor = await resp.json();
+    carregarCalendario();
 });
