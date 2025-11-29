@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Registrar Humor</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="home.css">
+
+    <style>
+        .home-box h2 { margin-top: 0; margin-bottom: 25px; font-size: 22px; }
+        .question { margin-bottom: 20px; font-size: 18px; }
+
+        .mood-options {
+            display: flex;
+            justify-content: space-between;
+            gap: 12px;
+            margin-bottom: 18px;
+        }
+
+        .mood-btn {
+            flex: 1;
+            border-radius: 10px;
+            border: 2px solid #333;
+            background: #262626;
+            padding: 12px 0;
+            cursor: pointer;
+            color: #fff;
+            font-size: 26px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            transition: transform 0.1s ease, box-shadow 0.1s ease, border-color 0.1s ease;
+        }
+
+        .mood-btn span.label { font-size: 11px; margin-top: 4px; opacity: 0.8; }
+
+        .mood-btn[data-mood="5"] { background: #4d3b13; } /* eufórico */
+        .mood-btn[data-mood="4"] { background: #3b3a13; } /* muito bem */
+        .mood-btn[data-mood="3"] { background: #27401e; } /* bem */
+        .mood-btn[data-mood="2"] { background: #23413b; } /* ok */
+        .mood-btn[data-mood="1"] { background: #273441; } /* mal */
+
+        .mood-btn.selected {
+            transform: translateY(-2px);
+            box-shadow: 0 0 12px rgba(236, 72, 153, 0.6);
+            border-color: #ec4899;
+        }
+
+        .note-area { margin: 10px 0 22px; text-align: left; }
+        .note-area label { display: block; margin-bottom: 6px; font-size: 14px; }
+        .note-area textarea {
+            width: 100%; min-height: 70px; border-radius: 8px;
+            border: 1px solid #444; background: #111; color: #fff;
+            padding: 8px; resize: vertical; font-family: inherit; font-size: 13px;
+        }
+
+        .status-text { margin-top: 8px; font-size: 13px; opacity: 0.9; }
+    </style>
+</head>
+
+<body>
+<div class="menu-container" id="menuContainer">
+    <button class="menu-button" id="menuButton" aria-label="Abrir menu">⋮</button>
+    <div class="menu-content">
+        <button class="btn-menu" onclick="window.location.href='/'">Tela inicial</button>
+        <button class="btn-menu" onclick="window.location.href='/estatisticas'">Estatísticas</button>
+    </div>
+</div>
+
+<div class="container">
+    <div class="home-box">
+        <h2>Registrar humor</h2>
+
+        <form method="post" action="/registrar-humor" th:action="@{/registrar-humor}" id="moodForm">
+            <p class="question">Como você se sente hoje?</p>
+
+            <div class="mood-options" aria-label="Selecione seu humor">
+                <button type="button" class="mood-btn" data-mood="5">
+                    <span>🤩</span>
+                    <span class="label">Eufórico</span>
+                </button>
+
+                <button type="button" class="mood-btn" data-mood="4">
+                    <span>😁</span>
+                    <span class="label">Muito bem</span>
+                </button>
+
+                <button type="button" class="mood-btn" data-mood="3">
+                    <span>🙂</span>
+                    <span class="label">Bem</span>
+                </button>
+
+                <button type="button" class="mood-btn" data-mood="2">
+                    <span>😐</span>
+                    <span class="label">Ok</span>
+                </button>
+
+                <button type="button" class="mood-btn" data-mood="1">
+                    <span>☹️</span>
+                    <span class="label">Mal</span>
+                </button>
+            </div>
+
+            <input type="hidden" name="moodValue" id="moodValue">
+
+            <div class="note-area">
+                <label for="note">Quer anotar algo sobre o dia? (opcional)</label>
+                <textarea id="note" name="note" placeholder="Ex.: Dormi bem, fiz exercícios..."></textarea>
+            </div>
+
+            <button class="btn" type="submit">Salvar humor de hoje</button>
+            <div id="statusText" class="status-text"></div>
+        </form>
+    </div>
+</div>
+
+<script>
+    const menuContainer = document.getElementById('menuContainer');
+    const menuButton = document.getElementById('menuButton');
+
+    menuButton.addEventListener('click', () => {
+        menuContainer.classList.toggle('show');
+    });
+
+    document.addEventListener('click', e => {
+        if (!menuContainer.contains(e.target)) menuContainer.classList.remove('show');
+    });
+
+    const moodButtons = document.querySelectorAll('.mood-btn');
+    const moodInput = document.getElementById('moodValue');
+    const statusText = document.getElementById('statusText');
+    const form = document.getElementById('moodForm');
+
+    moodButtons.forEach(btn => {
+        btn.addEventListener('click', () => {
+            moodButtons.forEach(b => b.classList.remove('selected'));
+            btn.classList.add('selected');
+            moodInput.value = btn.dataset.mood;
+            statusText.textContent = '';
+        });
+    });
+
+    form.addEventListener('submit', e => {
+        if (!moodInput.value) {
+            e.preventDefault();
+            statusText.textContent = 'Selecione uma carinha antes de salvar.';
+            statusText.style.color = '#f87171';
+        } else {
+            statusText.textContent = 'Enviando...';
+            statusText.style.color = '#9ca3af';
+        }
+    });
+</script>
+</body>
+</html>
