@@ -5,11 +5,13 @@ import br.edu.ifsp.spo.java.model.HumorModel;
 import br.edu.ifsp.spo.java.service.HumorService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import jakarta.servlet.http.HttpSession;
 
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
+
 
 @RestController
 @RequestMapping("/humor")
@@ -94,8 +96,12 @@ public class HumorController {
 
     /// Gráfico (Não está diferenciando os usuários, junta)
     @GetMapping("/diario")
-    public ResponseEntity<List<HumorDiarioDTO>> getHumorDiario() {
-        List<HumorDiarioDTO> resultado = humorService.calcularHumorDiario();
+    public ResponseEntity<List<HumorDiarioDTO>> getHumorDiario(HttpSession session) {
+
+        // Obter Id pela sessão
+        Long idUser = (Long) session.getAttribute("idUser");
+
+        List<HumorDiarioDTO> resultado = humorService.calcularHumorDiario(idUser);
         return ResponseEntity.ok(resultado);
     }
 
@@ -106,10 +112,14 @@ public class HumorController {
         return ResponseEntity.ok(salvos);
     }
 
-    /// Humor por UserID
-    @GetMapping("/{id}/humor")
-    public ResponseEntity<List<HumorModel>> getHumorByIdUser(@PathVariable Long id){
-        List<HumorModel> humores = humorService.findByIdUser(id);
+    /// Humor do usuário logado
+    @GetMapping("/humor")
+    public ResponseEntity<List<HumorModel>> getHumorByIdUser(HttpSession session) {
+
+        // Obter Id pela sessão
+        Long idUser = (Long) session.getAttribute("idUser");
+
+        List<HumorModel> humores = humorService.findByIdUser(idUser);
         return ResponseEntity.ok(humores);
     }
 }

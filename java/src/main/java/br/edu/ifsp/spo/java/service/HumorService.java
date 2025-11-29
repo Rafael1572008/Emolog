@@ -5,7 +5,6 @@ import br.edu.ifsp.spo.java.model.HumorModel;
 import br.edu.ifsp.spo.java.model.TagModel;
 import br.edu.ifsp.spo.java.repository.HumorRepository;
 import br.edu.ifsp.spo.java.repository.TagRepository;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -94,8 +93,8 @@ public class HumorService {
     }
 
     // Calcular a média de emoções diaria do User (Aredondar para cima)
-    public List<HumorDiarioDTO> calcularHumorDiario() {
-        Map<String, List<HumorModel>> porDia = humorRepository.findAll()
+    public List<HumorDiarioDTO> calcularHumorDiario(Long idUser) {
+        Map<String, List<HumorModel>> porDia = humorRepository.findByUsuarioIdOrderByDataHoraDesc(idUser)
                 .stream()
                 .collect(Collectors.groupingBy(h -> h.getDataHora().toLocalDate().toString()));
 
