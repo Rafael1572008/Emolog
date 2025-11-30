@@ -50,19 +50,21 @@ public class UsuarioController {
                 .orElse(ResponseEntity.notFound().build()); // retorna 404 se não encontrado
     }
 
-    // Buscar por email e senha
     @PostMapping("/login")
-    public ResponseEntity<UsuarioModel> getbyEmailandSenha(@RequestBody LoginResponseDTO loginResponse, HttpSession session){
-        Optional<UsuarioModel> usuarioOpt = usuarioService.findByEmail(loginResponse.getEmail());
+    public ResponseEntity<UsuarioModel> login(@RequestBody LoginResponseDTO login, HttpSession session) {
 
-        if (usuarioOpt.isPresent() && usuarioOpt.get().getSenhaHash().equals(loginResponse.getSenha())) {
-            session.setAttribute("usuario", loginResponse.getEmail());
-            session.setAttribute("idUser", usuarioOpt.get().getId());  // adiciona o ID (Thiago)
-            return ResponseEntity.ok(usuarioOpt.get()); // 200 OK
+        Optional<UsuarioModel> usuarioOpt =
+                usuarioService.login(login.getEmail(), login.getSenha());
+
+        if (usuarioOpt.isPresent()) {
+            session.setAttribute("usuario", usuarioOpt.get().getEmail());
+            session.setAttribute("idUser", usuarioOpt.get().getId());
+            return ResponseEntity.ok(usuarioOpt.get());
         }
 
-        return ResponseEntity.status(401).build(); // 401 Unauthorized
+        return ResponseEntity.status(401).build();
     }
+
 
     @GetMapping("/logout")
     public ResponseEntity<Void> logout(HttpSession session) {
