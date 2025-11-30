@@ -67,7 +67,7 @@
                 </div>
 
                 <div class="tags" th:if="${h.tags != null and !h.tags.isEmpty()}">
-                    <span class="tag" th:each="tg : ${h.tags}" th:text="${tg}"></span>
+                    <span class="tag" th:each="tg : ${h.tags}" th:text="${tg.nome}"></span>
                 </div>
 
                 <div class="humor-display">
@@ -90,9 +90,6 @@
             <a class="botao-tags" href="/tags/criar">Adicionar nova tag</a>
             <a class="botao-tags" href="/tags/aplicar">Aplicar tags aos registros</a>
         </div>
-
-        hello
-
         <a class="btn" href="/registrarHumor">
             <img src="/imagens/Botao_de_Mais.webp" width="100px" height="100px">
         </a>
