@@ -1,5 +1,6 @@
 package br.edu.ifsp.spo.java.service;
 
+import br.edu.ifsp.spo.java.model.HumorModel;
 import br.edu.ifsp.spo.java.model.TagModel;
 import br.edu.ifsp.spo.java.repository.TagRepository;
 import org.springframework.stereotype.Service;
@@ -30,4 +31,9 @@ public class TagService {
 
     // Procurar Tag pelo Id
     public Optional<TagModel> findById(Long id) { return tagRepository.findById(id); }
+
+    // Obter tag por Usuário
+    public List<TagModel> findByIdUser(Long usuarioId) {
+        return tagRepository.findByUsuarioIdOrderByNomeAsc(usuarioId);
+    }
 }

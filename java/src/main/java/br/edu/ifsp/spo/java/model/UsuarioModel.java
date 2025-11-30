@@ -13,38 +13,51 @@ public class UsuarioModel {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @JsonIgnore  /// Evitar o 'loop infinito de serialização Json'
+    @JsonIgnore
     @OneToMany(mappedBy = "usuario")
     private Set<HumorModel> registrosHumor;
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "usuario")
+    private Set<TagModel> tags;
 
     private String nome;
     private String email;
     private String senhaHash;
 
-    // Construtores
     public UsuarioModel() {}
 
-    public UsuarioModel(String nome, String email, String senhaHash) {
+    public UsuarioModel(String nome, String email, String senhaHash, Set<TagModel> tags) {
         this.nome = nome;
         this.email = email;
         this.senhaHash = senhaHash;
+        this.tags = tags;
     }
 
     // Getters e Setters
-    public long getId() {
+
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
-    public Set<HumorModel> getRegistrosHumor(){
+    public Set<HumorModel> getRegistrosHumor() {
         return registrosHumor;
     }
 
     public void setRegistrosHumor(Set<HumorModel> registrosHumor) {
         this.registrosHumor = registrosHumor;
+    }
+
+    public Set<TagModel> getTags() {
+        return tags;
+    }
+
+    public void setTags(Set<TagModel> tags) {
+        this.tags = tags;
     }
 
     public String getNome() {

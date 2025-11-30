@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Gerenciar Tags</title>
+    <link rel="stylesheet" href="/css/tags.css">
+</head>
+
+<body>
+
+<div class="botoes-navegacao">
+    <a class="btn" href="/estatisticas">
+        <img src="/imagens/Botao_de_Estatisticas.webp" width="80" height="80">
+    </a>
+    <a class="btn" href="/tag">
+        <img src="/imagens/Botao_de_Tag.webp" width="80" height="80">
+    </a>
+</div>
+
+<div class="container">
+
+    <!-- Menu -->
+    <div class="menu-container">
+        <button class="menu-button" onclick="toggleMenu(this)">⋮</button>
+        <div class="menu-content">
+            <a class="btn-menu" href="/alterarsenha">Alterar senha</a>
+            <a class="btn-menu" href="/usuario/logout">Sair</a>
+        </div>
+    </div>
+
+    <div class="home-box">
+
+        <h1>Gerenciar Tags</h1>
+
+        <div class="historico-humor">
+
+            <div class="sem-registros"
+                 th:if="${#lists.isEmpty(tags)}">
+                Nenhuma tag criada ainda.
+            </div>
+
+
+            <div id="listaTags">
+
+                <div class="tag-item"
+                     th:each="tag : ${tags}">
+
+                    <div class="humor-top">
+                        <!-- Nome -->
+                        <div class="dataHora" th:text="${tag.nome}">Nome da Tag</div>
+
+                        <div class="humor-acoes">
+
+                            <!-- Editar -->
+                            <button th:onclick="'editarTag(' + ${tag.id} + ')'"
+                                    style="background:none;border:none;">
+                                <img src="/imagens/Botao_de_Edicao.webp" alt="Editar">
+                            </button>
+
+                            <!-- Deletar -->
+                            <button th:onclick="'deletarTag(' + ${tag.id} + ')'"
+                                    style="background:none;border:none;">
+                                <img src="/imagens/Botao_de_Excluir.png" alt="Excluir">
+                            </button>
+
+
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- Botão criar -->
+        <div class="botoes-tags">
+            <a class="botao-tags" href="/tags/criar">Criar nova tag</a>
+        </div>
+
+    </div>
+</div>
+
+<script src="/js/menu.js"></script>
+
+<script>
+
+    function editarTag(id) {
+        window.location.href = "/tags/editar/" + id;
+    }
+
+    function deletarTag(id) {
+        if (!confirm("Tem certeza que deseja deletar esta tag?")) return;
+
+        fetch("/tag/" + id, { method: "DELETE" })
+            .then(() => location.reload());
+    }
+
+</script>
+
+</body>
+</html>
