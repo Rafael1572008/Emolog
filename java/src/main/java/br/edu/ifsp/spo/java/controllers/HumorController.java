@@ -4,6 +4,7 @@ import br.edu.ifsp.spo.java.dto.response.CriarHumorDTO;
 import br.edu.ifsp.spo.java.dto.response.HumorDiarioDTO;
 import br.edu.ifsp.spo.java.model.HumorEnum;
 import br.edu.ifsp.spo.java.model.HumorModel;
+import br.edu.ifsp.spo.java.model.TagModel;
 import br.edu.ifsp.spo.java.model.UsuarioModel;
 import br.edu.ifsp.spo.java.repository.UsuarioRepository;
 import br.edu.ifsp.spo.java.service.HumorService;
@@ -153,15 +154,15 @@ public class HumorController {
     }
 
     /// Obter humores por tags
-    @GetMapping("/filtro/{humorTipo}")
+    @GetMapping("/filtro/{tagTipo}")
     public ResponseEntity<List<HumorModel>> getHumorByHumor(
             HttpSession session,
-            @PathVariable HumorEnum humorTipo){
+            @PathVariable TagModel tagTipo){
 
         // Obter Id pela sessão
         Long idUser = (Long) session.getAttribute("idUser");
 
-        List<HumorModel> humores = humorService.findHumorByTag(idUser, humorTipo);
+        List<HumorModel> humores = humorService.findHumorByTag(idUser, tagTipo);
         return ResponseEntity.ok(humores);
     }
 }

@@ -136,7 +136,7 @@ public class HumorService {
     }
 
     /// Obter Humores por Tag
-    public List<HumorModel> findHumorByTag(Long usuarioId, HumorEnum humorTipo){
-        return humorRepository.findByUsuarioIdAndHumorOrderByIdDesc(usuarioId, humorTipo);
+    public List<HumorModel> findHumorByTag(Long usuarioId, TagModel tagModel){
+        return humorRepository.findByUsuarioIdAndTagsContainingOrderByIdDesc(usuarioId, tagModel);
     }
 }
