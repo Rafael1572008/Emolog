@@ -5,7 +5,6 @@
     <meta charset="UTF-8">
     <title>Home</title>
     <link rel="stylesheet" href="/css/home.css">
-    <
 </head>
 
 <body>
@@ -34,7 +33,7 @@
 
         <div class="historico-humor">
             <div class="sem-registros" th:if="${#lists.isEmpty(registros)}">
-                Nenhum registro de humor encontrado ainda.
+                Não há registros de humor.
             </div>
 
 
@@ -45,18 +44,25 @@
                     <div class="dataHora" th:text="${#temporals.format(h.dataHora, 'dd/MM/yyyy HH:mm')}"></div>
 
                     <div class="humor-acoes">
-                        <a th:href="@{'/humor/editar/' + ${h.id}}">
-                            <img src="/imagens/Botao_de_Edicao.webp" alt="Editar">
-                        </a>
+                        <img src="/imagens/Botao_de_Edicao.webp"
+                             alt="Editar"
+                             class="btn-editar"
+                             th:data-id="${h.id}"
+                             th:data-texto="${h.texto != null ? h.texto : ''}"
+                             data-id=""
+                             data-texto=""
+                             style="cursor:pointer; width:60px; height:60px;">
 
                         <button onclick="mostrarTexto(this)" class="btn-texto" style="background:none;border:none;padding:0;">
                             <img src="/imagens/Botao_de_Notas.webp" alt="Texto">
                         </button>
 
-                        <a th:href="@{'/humor/excluir/' + ${h.id}}">
+                        <button class="btn-delete" type="button"
+                                th:onclick="'excluirHumor(' + ${h.id} + ')'">
                             <img src="/imagens/Botao_de_Excluir.png" alt="Excluir">
-                        </a>
+                        </button>
                     </div>
+
 
                 </div>
 
@@ -69,8 +75,11 @@
                     <span th:text="${h.humor.name()}"></span>
                 </div>
 
-                <div class="texto-humor" style="display:none; margin-top:10px; font-size:14px; color:#ddd;"
-                     th:text="${h.texto}">
+                <div class="texto-humor"
+                     style="display:none; margin-top:10px; font-size:14px; color:#ddd;"
+                     th:text="${h.texto}"
+                     th:data-humor-id="${h.id}"
+                     data-humor-id="">
                 </div>
 
             </div>
@@ -86,6 +95,29 @@
             <img src="/imagens/Botao_de_Mais.webp" width="100px" height="100px">
         </a>
 
+    </div>
+</div>
+
+<!-- Modal de Edição de Texto -->
+<div id="modalEditarTexto" class="modal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h2>Editar anotação</h2>
+            <span class="fechar-modal" onclick="fecharModal()">&times;</span>
+        </div>
+
+        <form id="formEditarTexto">
+            <textarea
+                    id="textoEditado"
+                    placeholder="Escreva aqui sua anotação..."
+                    maxlength="500"
+                    rows="6"></textarea>
+
+            <div class="modal-actions">
+                <button type="button" class="btn-cancelar" onclick="fecharModal()">Cancelar</button>
+                <button type="submit" class="btn-salvar">Salvar</button>
+            </div>
+        </form>
     </div>
 </div>
 
