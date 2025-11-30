@@ -5,7 +5,6 @@
     <meta charset="UTF-8">
     <title>Home</title>
     <link rel="stylesheet" href="/css/home.css">
-    <
 </head>
 
 <body>
@@ -34,7 +33,7 @@
 
         <div class="historico-humor">
             <div class="sem-registros" th:if="${#lists.isEmpty(registros)}">
-                Nenhum registro de humor encontrado ainda.
+                Não há registros de humor.
             </div>
 
 
@@ -52,16 +51,18 @@
                              th:data-texto="${h.texto != null ? h.texto : ''}"
                              data-id=""
                              data-texto=""
-                             style="cursor:pointer; width:50px; height:50px;">
+                             style="cursor:pointer; width:60px; height:60px;">
 
                         <button onclick="mostrarTexto(this)" class="btn-texto" style="background:none;border:none;padding:0;">
                             <img src="/imagens/Botao_de_Notas.webp" alt="Texto">
                         </button>
 
-                        <a th:href="@{'/humor/excluir/' + ${h.id}}">
+                        <button class="btn-delete" type="button"
+                                th:onclick="'excluirHumor(' + ${h.id} + ')'">
                             <img src="/imagens/Botao_de_Excluir.png" alt="Excluir">
-                        </a>
+                        </button>
                     </div>
+
 
                 </div>
 
