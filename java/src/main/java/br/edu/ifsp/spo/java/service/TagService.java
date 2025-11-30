@@ -36,4 +36,16 @@ public class TagService {
     public List<TagModel> findByIdUser(Long usuarioId) {
         return tagRepository.findByUsuarioIdOrderByNomeAsc(usuarioId);
     }
+
+    /// Altear titulo tag
+    public TagModel updateTextoHumor(Long id, String novoText){
+
+        TagModel tag = tagRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Humor não encontrado"));
+
+        tag.setNome(novoText);
+
+        return tagRepository.save(tag);
+
+    }
 }

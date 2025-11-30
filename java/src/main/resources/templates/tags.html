@@ -13,7 +13,7 @@
     <a class="btn" href="/estatisticas">
         <img src="/imagens/Botao_de_Estatisticas.webp" width="80" height="80">
     </a>
-    <a class="btn" href="/tag">
+    <a class="btn" href="/">
         <img src="/imagens/Botao_de_Tag.webp" width="80" height="80">
     </a>
 </div>
@@ -42,28 +42,25 @@
 
             <div id="listaTags">
 
-                <div class="tag-item"
-                     th:each="tag : ${tags}">
-
+                <!-- Dentro do th:each -->
+                <div class="tag-item" th:each="tag : ${tags}">
                     <div class="humor-top">
-
-                        <!-- Nome -->
                         <div class="dataHora" th:text="${tag.nome}">Nome da Tag</div>
-
                         <div class="humor-acoes">
-
-                            <!-- Editar -->
-                            <button th:onclick="'editarTag(' + ${tag.id} + ')'"
-                                    style="background:none;border:none;">
+                            <!-- EDITAR -->
+                            <button type="button"
+                                    th:onclick="@{'editarTag(' + ${tag.id} + ', \'' + ${#strings.escapeJavaScript(tag.nome)} + '\')'}"
+                                    style="background:none;border:none;cursor:pointer;">
                                 <img src="/imagens/Botao_de_Edicao.webp" alt="Editar">
                             </button>
 
-                            <!-- Deletar -->
-                            <button th:onclick="'deletarTag(' + ${tag.id} + ')'"
-                                    style="background:none;border:none;">
+                            <!-- EXCLUIR -->
+                            <button type="button"
+                                    th:onclick="@{'deletarTag(' + ${tag.id} + ')'}"
+                                    class="btn-excluir-numerado"
+                                    style="background:none;border:none;cursor:pointer;color:#d00;font-weight:bold;">
                                 <img src="/imagens/Botao_de_Excluir.png" alt="Excluir">
                             </button>
-
                         </div>
                     </div>
                 </div>
@@ -86,13 +83,15 @@
     <div class="modal-content">
         <span class="fechar" onclick="fecharModalCriar()">×</span>
 
-        <h2>Criar nova tag</h2>
+        <!-- Adicionei ID aqui para facilitar o JS -->
+        <h2 id="tituloModal">Criar nova tag</h2>
 
-        <form id="formCriarTag" onsubmit="salvarTag(event)">
+        <form id="formCriarTag">
             <label for="nomeTag">Nome da tag</label>
-            <input type="text" id="nomeTag" name="nome" required>
+            <input type="text" id="nomeTag" name="nome" required autofocus>
 
-            <button type="submit" class="btn-salvar">Salvar</button>
+            <!-- Adicionei ID aqui também -->
+            <button type="submit" id="btnSalvarTag" class="btn-salvar">Salvar</button>
         </form>
     </div>
 </div>
