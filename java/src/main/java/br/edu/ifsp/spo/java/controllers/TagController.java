@@ -1,5 +1,6 @@
 package br.edu.ifsp.spo.java.controllers;
 
+import br.edu.ifsp.spo.java.model.HumorModel;
 import br.edu.ifsp.spo.java.model.TagModel;
 import br.edu.ifsp.spo.java.model.UsuarioModel;
 import br.edu.ifsp.spo.java.repository.UsuarioRepository;
@@ -10,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @RestController
@@ -81,5 +83,20 @@ public class TagController {
         tagService.delete(id);
 
         return ResponseEntity.noContent().build();
+    }
+
+    /// Alterar texto tag
+    @PatchMapping("/{id}/texto")
+    public ResponseEntity<TagModel> alterTitleHumor(
+            @PathVariable Long id,
+            @RequestBody Map<String, String> body) {
+
+        String novoTexto = body.get("texto");
+        if (novoTexto == null || novoTexto.trim().isBlank()) {
+            return ResponseEntity.badRequest().build();
+        }
+
+        TagModel atualizado = tagService.updateTextoHumor(id, novoTexto.trim());
+        return ResponseEntity.ok(atualizado);
     }
 }
