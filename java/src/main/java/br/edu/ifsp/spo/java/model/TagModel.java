@@ -1,6 +1,7 @@
 package br.edu.ifsp.spo.java.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 
 import java.util.Set;
@@ -21,14 +22,22 @@ public class TagModel {
     @ManyToMany(mappedBy = "tags")
     private Set<HumorModel> registroHumor;
 
+    // Relacionamento com usuário
+    @ManyToOne
+    @JoinColumn(name = "usuario_id")
+    @JsonIgnoreProperties({"listaHumor", "tags", "senhaHash"})
+    private UsuarioModel usuario;
+
+
 
     // Construtores
     public TagModel() {
     }
 
-    public TagModel(Long id, String nome) {
+    public TagModel(Long id, String nome, UsuarioModel usuario) {
         this.id = id;
         this.nome = nome;
+        this.usuario = usuario;
     }
 
 
@@ -57,8 +66,13 @@ public class TagModel {
         this.registroHumor = registroHumor;
     }
 
+    public UsuarioModel getUsuario() {
+        return usuario;
+    }
 
-
+    public void setUsuario(UsuarioModel usuario) {
+        this.usuario = usuario;
+    }
 
     @Override // Representação
     public String toString() {

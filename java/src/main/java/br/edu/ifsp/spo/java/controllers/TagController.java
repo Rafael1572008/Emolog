@@ -2,6 +2,7 @@ package br.edu.ifsp.spo.java.controllers;
 
 import br.edu.ifsp.spo.java.model.TagModel;
 import br.edu.ifsp.spo.java.service.TagService;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -39,5 +40,24 @@ public class TagController {
         return tagOptional
                 .map(ResponseEntity::ok)  // 200 OK + tag
                 .orElse(ResponseEntity.notFound().build()); // 404 se não encontrar
+    }
+
+    // Obter tags por usuários
+    @GetMapping("/user")
+    public ResponseEntity<List<TagModel>> getTagsByIdUser(HttpSession session){
+
+        // Obter Id do usuário pela sessão
+        Long IdUSer = (Long) session.getAttribute("idUser");
+
+        List<TagModel> tags = tagService.findByIdUser(IdUSer);
+        return ResponseEntity.ok(tags);
+    }
+
+    /// Deletar Tag
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> DeleteById(@PathVariable Long id){
+        tagService.delete(id);
+
+        return ResponseEntity.noContent().build();
     }
 }
