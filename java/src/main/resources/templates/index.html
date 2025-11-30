@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+
 <head>
     <meta charset="UTF-8">
     <title>Home</title>
     <link rel="stylesheet" href="/css/home.css">
     <
 </head>
+
 <body>
 
 <div class="botoes-navegacao">
@@ -17,7 +19,6 @@
     </a>
 </div>
 
-</div>
 <div class="container">
     <div class="menu-container">
         <button class="menu-button" onclick="toggleMenu(this)">⋮</button>
@@ -28,24 +29,78 @@
     </div>
 
     <div class="home-box">
-        <h1>Bem-vindo, <span th:text="${nome}"></span>!</h1>
+
+        <h1>Seus Registros</h1>
 
         <div class="historico-humor">
-            <div class="container-humordia">
-                <p>&nbsp;</p> <!-- Futuros containers provavelmente -->
-                <p>&nbsp;</p>
-                <p>&nbsp;</p>
-                <p>&nbsp;</p>
+            <div class="sem-registros" th:if="${#lists.isEmpty(registros)}">
+                Nenhum registro de humor encontrado ainda.
             </div>
+
+
+            <div class="humor-item" th:each="h : ${registros}">
+
+                <div class="humor-top">
+
+                    <div class="dataHora" th:text="${#temporals.format(h.dataHora, 'dd/MM/yyyy HH:mm')}"></div>
+
+                    <div class="humor-acoes">
+                        <a th:href="@{'/humor/editar/' + ${h.id}}">
+                            <img src="/imagens/Botao_de_Edicao.webp" alt="Editar">
+                        </a>
+
+                        <button onclick="mostrarTexto(this)" class="btn-texto" style="background:none;border:none;padding:0;">
+                            <img src="/imagens/Botao_de_Notas.webp" alt="Texto">
+                        </button>
+
+                        <a th:href="@{'/humor/excluir/' + ${h.id}}">
+                            <img src="/imagens/Botao_de_Excluir.png" alt="Excluir">
+                        </a>
+                    </div>
+
+                </div>
+
+                <div class="tags" th:if="${h.tags != null and !h.tags.isEmpty()}">
+                    <span class="tag" th:each="tg : ${h.tags}" th:text="${tg}"></span>
+                </div>
+
+                <div class="humor-display">
+                    <img th:src="${'/imagens/' + h.humor.imagem}" alt="Humor">
+                    <span th:text="${h.humor.name()}"></span>
+                </div>
+
+                <div class="texto-humor" style="display:none; margin-top:10px; font-size:14px; color:#ddd;"
+                     th:text="${h.texto}">
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="botoes-tags">
+            <a class="botao-tags" href="/tags/criar">Adicionar nova tag</a>
+            <a class="botao-tags" href="/tags/aplicar">Aplicar tags aos registros</a>
         </div>
 
         <a class="btn" href="/registrarHumor">
             <img src="/imagens/Botao_de_Mais.webp" width="100px" height="100px">
         </a>
+
     </div>
 </div>
 
 <script th:src="@{/js/menu.js}"></script>
+
+<script>
+    function mostrarTexto(botao) {
+        const bloco = botao.closest(".humor-item").querySelector(".texto-humor");
+        if (bloco.style.display === "none") {
+            bloco.style.display = "block";
+        } else {
+            bloco.style.display = "none";
+        }
+    }
+</script>
 
 </body>
 </html>

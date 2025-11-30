@@ -25,17 +25,32 @@ public class HomePageController {
 
     @GetMapping
     public String homePage(HttpSession session, Model model) {
-        if (session.getAttribute("usuario") == null) {
+        // Se não tem usuário logado → login
+        String email = (String) session.getAttribute("usuario");
+        Long idUser = (Long) session.getAttribute("idUser");
+
+        if (email == null || idUser == null) {
             return "redirect:/login";
         }
 
-        String email = (String) session.getAttribute("usuario");
-        Long idUser = usuarioService.findByEmail(email).get().getId();
+        // Busca o usuário de forma segura
+        var usuarioOpt = usuarioService.findByEmail(email);
 
-        String nomeUsuario = usuarioService.findByEmail(email).get().getNome();
-//        List<HumorModel> registros = humorService.findByIdUser(idUser);
+        if (usuarioOpt.isEmpty()) {
+            session.invalidate();
+            return "redirect:/login";
+        }
+
+        String nomeUsuario = usuarioOpt.get().getNome();
+
+        // Busca registros SEM lançar erro se a lista estiver vazia
+        List<HumorModel> registros = humorService.findByIdUser(idUser);
+        if (registros == null) {
+            registros = List.of(); // garante lista vazia
+        }
 
         model.addAttribute("nome", nomeUsuario);
+        model.addAttribute("registros", registros);
 
         return "index";
     }
