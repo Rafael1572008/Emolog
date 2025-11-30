@@ -40,13 +40,13 @@
                 Nenhuma tag criada ainda.
             </div>
 
-
             <div id="listaTags">
 
                 <div class="tag-item"
                      th:each="tag : ${tags}">
 
                     <div class="humor-top">
+
                         <!-- Nome -->
                         <div class="dataHora" th:text="${tag.nome}">Nome da Tag</div>
 
@@ -64,7 +64,6 @@
                                 <img src="/imagens/Botao_de_Excluir.png" alt="Excluir">
                             </button>
 
-
                         </div>
                     </div>
                 </div>
@@ -75,28 +74,31 @@
 
         <!-- Botão criar -->
         <div class="botoes-tags">
-            <a class="botao-tags" href="/tags/criar">Criar nova tag</a>
+            <button class="botao-tags" onclick="abrirModalCriar()">Criar nova tag</button>
         </div>
 
     </div>
 </div>
 
-<script src="/js/menu.js"></script>
 
-<script>
+<!-- MODAL CRIAR TAG -->
+<div id="modalCriarTag" class="modal">
+    <div class="modal-content">
+        <span class="fechar" onclick="fecharModalCriar()">×</span>
 
-    function editarTag(id) {
-        window.location.href = "/tags/editar/" + id;
-    }
+        <h2>Criar nova tag</h2>
 
-    function deletarTag(id) {
-        if (!confirm("Tem certeza que deseja deletar esta tag?")) return;
+        <form id="formCriarTag" onsubmit="salvarTag(event)">
+            <label for="nomeTag">Nome da tag</label>
+            <input type="text" id="nomeTag" name="nome" required>
 
-        fetch("/tag/" + id, { method: "DELETE" })
-            .then(() => location.reload());
-    }
+            <button type="submit" class="btn-salvar">Salvar</button>
+        </form>
+    </div>
+</div>
 
-</script>
+
+<script src="/js/tags.js"></script>
 
 </body>
 </html>
