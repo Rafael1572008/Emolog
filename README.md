@@ -6,6 +6,10 @@ Repositório criado para o projeto da disciplina de **Linguagem de Programação
 
 **Acompanhamento de Humor** — Inspirado em aplicativos como *Daylio*, a aplicação permite que o usuário registre como está se sentindo em diferentes momentos do dia, com possibilidade de filtrar registros por data, status emocional e tags personalizadas.
 
+## Apresentação do Projeto
+
+🔗 https://drive.google.com/drive/folders/1aTj2YmMFB2pB67J5XAiOwjK9v8DF28WU?usp=sharing
+
 ## Link do Repositório
 
 🔗 https://github.com/Rafael1572008/-Tema-Trabalho-LPB2
