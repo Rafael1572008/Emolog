@@ -58,18 +58,21 @@ document.getElementById('formEditarTexto').onsubmit = function(e) {
     })
     .then(r => {
         if (r.ok) {
-            const bloco = document.querySelector(`[data-humor-id="${humorIdAtual}"]`);
+
+            const bloco = document.querySelector(`.texto-humor[data-humor-id="${humorIdAtual}"]`);
+
             if (bloco) {
                 bloco.textContent = novoTexto || '(sem texto)';
-                if (!novoTexto) bloco.style.display = 'none';
-                else bloco.style.display = 'block';
+                bloco.style.display = novoTexto ? 'block' : 'none';
             }
+
             fecharModal();
         } else {
             alert('Erro ao salvar.');
         }
     });
 };
+
 
 document.addEventListener('keydown', e => {
     if (e.key === 'Escape') fecharModal();
@@ -112,3 +115,112 @@ function excluirHumor(id) {
         })
     }
 
+document.addEventListener("DOMContentLoaded", () => {
+
+    document.querySelectorAll(".btn-add-tag").forEach(btn => {
+        btn.addEventListener("click", () => {
+            const menu = btn.parentElement.querySelector(".tag-menu");
+            menu.style.display = menu.style.display === "block" ? "none" : "block";
+        });
+    });
+
+    document.querySelectorAll(".tag-opcao").forEach(opcao => {
+        opcao.addEventListener("click", async () => {
+
+            const tagId = opcao.dataset.id;
+
+            const container = opcao.closest(".humor-item");
+            const humorId = container.dataset.humorId;
+
+            const tagsDiv = container.querySelector(".tags");
+
+            const jaTem = Array.from(tagsDiv.querySelectorAll(".tag"))
+                .some(t => t.textContent.trim() === opcao.textContent.trim());
+
+            if (jaTem) return;
+
+
+            console.log("Humor ID:", humorId);
+            console.log("Tag ID:", tagId);
+            console.log("Enviando:", JSON.stringify([ Number(tagId) ]));
+
+            await fetch(`/humor/${humorId}/tags`, {
+                method: "PATCH",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify([ Number(tagId) ])
+            });
+
+            const nova = document.createElement("span");
+            nova.classList.add("tag");
+            nova.textContent = opcao.textContent;
+            tagsDiv.appendChild(nova);
+
+            opcao.parentElement.style.display = "none";
+        });
+    });
+
+});
+
+document.addEventListener("click", async function(e) {
+
+    if (!e.target.classList.contains("tag-remove")) return;
+
+    const tagSpan = e.target.closest(".tag");
+    const tagId = tagSpan.dataset.tagId;
+
+    const container = e.target.closest(".humor-item");
+    const humorId = container.dataset.humorId;
+
+    console.log("Remover Tag -> Humor:", humorId, "Tag:", tagId);
+
+    const resp = await fetch(`/humor/${humorId}/tags`, {
+        method: "DELETE",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify([ Number(tagId) ])
+    });
+
+    if (!resp.ok) {
+        alert("Erro ao remover tag.");
+        return;
+    }
+
+    tagSpan.remove();
+});
+
+function toggleFiltro(botao) {
+    const menu = botao.nextElementSibling;
+    menu.style.display = (menu.style.display === 'block') ? 'none' : 'block';
+}
+
+document.querySelectorAll('.filtro-tag-opcao').forEach(tag => {
+    tag.addEventListener('click', () => {
+        tag.classList.toggle('selecionada');
+        aplicarFiltro();
+    });
+});
+
+function aplicarFiltro() {
+    const selecionadas = Array.from(document.querySelectorAll('.filtro-tag-opcao.selecionada'))
+                              .map(t => t.textContent.trim());
+
+    document.querySelectorAll('.humor-item').forEach(item => {
+        if (selecionadas.length === 0) {
+            item.style.display = 'flex';
+            return;
+        }
+
+        const itemTags = Array.from(item.querySelectorAll('.tag span:first-child'))
+                              .map(t => t.textContent.trim());
+
+        const possuiTodas = selecionadas.every(tag => itemTags.includes(tag));
+
+        item.style.display = possuiTodas ? 'flex' : 'none';
+    });
+}
+
+document.addEventListener('click', function(event) {
+    const filtro = document.querySelector('.filtro-tags-container');
+    if (!filtro.contains(event.target)) {
+        document.querySelector('.filtro-menu').style.display = 'none';
+    }
+});

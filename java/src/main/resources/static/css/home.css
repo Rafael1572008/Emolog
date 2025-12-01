@@ -126,7 +126,27 @@ body {
   padding: 3px 8px;
   border-radius: 6px;
   color: #fff;
+  position: relative;
+  padding-right: 18px;
 }
+
+.tag:hover .tag-remove {
+    opacity: 1;
+    color: #808080;
+}
+
+.tag-remove {
+    position: absolute;
+    right: 4px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-weight: bold;
+    cursor: pointer;
+    color: #ccc;
+    opacity: 0;
+    transition: 0.2s;
+}
+
 
 .humor-display {
   display: flex;
@@ -137,12 +157,6 @@ body {
 .humor-display img {
   width: 32px;
   height: 32px;
-}
-
-.botoes-tags {
-  display: flex;
-  justify-content: center;
-  gap: 15px;
 }
 
 .botao-tags {
@@ -393,4 +407,106 @@ body {
 .btn-delete img {
     width: 60px;
     height: 60px;
+}
+
+.tags-container {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    position: relative;
+}
+
+.btn-add-tag {
+  background: none;
+  border: none;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.btn-add-tag img {
+    cursor: pointer;
+    width: 30px;
+    height: 30px;
+}
+
+.tag-menu {
+    display: none;
+    position: absolute;
+    top: 35px;
+    left: 0;
+    background: #222;
+    border: 1px solid #555;
+    padding: 8px;
+    width: 160px;
+    border-radius: 6px;
+    z-index: 100;
+}
+
+.tag-opcao {
+    padding: 6px;
+    cursor: pointer;
+    margin-bottom: 4px;
+    border-radius: 4px;
+    background: #333;
+    color: #ddd;
+    transition: 0.2s;
+}
+
+.tag-opcao:hover {
+    background: #555;
+}
+
+.filtro-tags-container {
+    position: fixed;
+    top: 10px;
+    right: 120px;
+    z-index: 1000;
+}
+
+.filtro-button {
+    background: #202020;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.filtro-button:hover {
+    background: #333;
+}
+
+.filtro-menu {
+    display: none;
+    position: absolute;
+    top: 40px;
+    right: 0;
+    background: #222;
+    border: 1px solid #555;
+    border-radius: 6px;
+    width: 180px;
+    padding: 8px;
+    z-index: 100;
+}
+
+.filtro-tag-opcao {
+    padding: 6px;
+    cursor: pointer;
+    margin-bottom: 4px;
+    border-radius: 4px;
+    background: #333;
+    color: #ddd;
+    transition: 0.2s;
+}
+
+.filtro-tag-opcao:hover {
+    background: #555;
+}
+
+.filtro-tag-opcao.selecionada {
+    background: #b566ff;
+    color: #fff;
 }

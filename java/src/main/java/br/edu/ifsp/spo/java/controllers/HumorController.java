@@ -86,7 +86,6 @@ public class HumorController {
     public ResponseEntity<Void> adicionarTags(
             @PathVariable Long id,
             @RequestBody Set<Long> tagsIds){
-
         humorService.adicionarTags(id, tagsIds);
         return ResponseEntity.noContent().build();
     }
