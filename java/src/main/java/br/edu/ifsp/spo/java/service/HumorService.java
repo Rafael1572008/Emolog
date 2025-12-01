@@ -37,7 +37,7 @@ public class HumorService {
     public void delete(Long id){
         humorRepository.deleteById(id);
     }
-
+    
     /// Procurar humor pelo id
     public Optional<HumorModel> findById(Long id){ // Me obriga a usar Optinal :( [Verei o pq]
         return humorRepository.findById(id);

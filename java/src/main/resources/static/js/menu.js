@@ -150,6 +150,8 @@ document.addEventListener("DOMContentLoaded", () => {
                 body: JSON.stringify([ Number(tagId) ])
             });
 
+            window.location.href = '/'; //atualiza as tags
+
             const nova = document.createElement("span");
             nova.classList.add("tag");
             nova.textContent = opcao.textContent;
